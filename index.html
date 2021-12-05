@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="js/drawFunctions.js"></script>
+    <script src="js/index.js"></script>
+    <title>Оптимальная одномерная упаковка в контейнере</title>
+</head>
+<body>
+    <div class="input-data-wrapper">
+        <p>Количество ящиков: </p> <input id="box-count" type="text" onchange="drawSubInputs()" placeholder="от 2 до 8">
+        <div class="boxes-inputs">
+        </div>
+        <p>Размер контейнера:</p> <input id="container-size" type="text" placeholder="от 50">
+        <button id="start-btn">Старт</button>
+        <button id="rnd-btn">Рандом</button>
+    </div>
+    <div class="wrapper">
+        <div class="entry-data">
+            <h1>Входные данные</h1>
+            <div class="entry-data-containers">
+            </div>
+        </div>
+        <div class="results">
+            <div class="FF">
+                <h1>Контейнеры алгоритма FF</h1>
+                <div class="containers">
+                </div>
+            </div>
+            <div class="FFS">
+                <h1>Контейнеры алгоритма FFS</h1>
+                <div class="containers">
+                </div>
+            </div>
+            <div class="brute-force">
+                <h1>Переборный (лучший или один из лучших вариантов)</h1>
+                <div class="containers">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
