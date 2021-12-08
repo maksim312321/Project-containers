@@ -23,30 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function FFS(boxes, containerSize) {
-        boxes.sort((a, b) => a.size > b.size ? -1 : 1);
+        boxes.sort((a, b) => a.size > b.size ? -1 : 1); // n*log(n) сортировка слиянием
         FF(boxes, containerSize, 1);
     }
 
     function FF(boxes, containerSize, algTypes = 0) {
-        let containers = new Array();
-        for (let i = 0; i < boxes.length; i++) {
-            for (let j = 0; j < containers.length; j++) {
-                if (containers[j].freePlace - boxes[i].size >= 0) {
-                    containers[j].freePlace -= boxes[i].size;
-                    containers[j].idBoxes.push(boxes[i].id); 
-                    boxes[i].isPutted = true;
-                    break;
+        let containers = new Array(); //C1
+        for (let i = 0; i < boxes.length; i++) { //C2 * N
+
+            for (let j = 0; j < containers.length; j++) { //C3 * P * N
+                if (containers[j].freePlace - boxes[i].size >= 0) { //C4 * P * N
+                    containers[j].freePlace -= boxes[i].size;//C5 * P * N
+                    containers[j].idBoxes.push(boxes[i].id); //C6 * P * N
+                    boxes[i].isPutted = true;//C8 * P * N
+                    break;//C9 * P * N
                 }
             }
-            if (boxes[i].isPutted === false) {
-                let newContainer = {
-                    freePlace: containerSize - boxes[i].size,
+
+            if (boxes[i].isPutted === false) { //C10 * N
+                let newContainer = { //C11 * N
+                    freePlace: containerSize - boxes[i].size, 
                     idBoxes: [boxes[i].id],
                 }
-                boxes[i].isPutted = true;
-                containers.push(newContainer);
+                boxes[i].isPutted = true; //C12 * N
+                containers.push(newContainer); //C13 * N
             }
+
         }
+
+        //худший случай P = N;
+
+        //лучший случай P = 1;
+
+        //средний случай P = N/2; 
+            // так как вес коробки - случайное число от 1 до М => с вероятностью 1/2 вес коробки будет больше половины контейнера
 
         drawContainers(containers, algTypes);
         boxes.forEach(element => {
@@ -80,17 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function getAllCombinations(arr) {
         let prev, curr, el;
-        let len = arr.length;
+        let len = arr.length;//C14
     
-        curr = [[arr[0]]];
+        curr = [[arr[0]]];//C15
+        let count = 0;
     
-        for (let i = 1; i < len; i++) {
-            el = arr[i];
-            prev = curr;
-            curr = [];
-        
-            prev.forEach(function(item) {
-                curr = curr.concat(combinate(item, el));
+        for (let i = 1; i < len; i++) {//C16 * N
+            el = arr[i];//C17 * N
+            prev = curr;//C18 * N
+            curr = [];//C19 * N
+
+            prev.forEach(function(item) { //C20 * N! * N
+                curr = curr.concat(combinate(item, el));//C20 * N! * N
             });
         }
     
@@ -98,14 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function combinate(arr, el) {
-        let len = arr.length;
-        let res = [];
+        let len = arr.length; // C22
+        let res = []; // C21
     
-        for (let i = len; i >= 0; i--) {
-            res.push(([]).concat(arr.slice(0, i), [el], arr.slice(i)));
+        //LEN - длина массива
+        for (let i = len; i >= 0; i--) { // C21 * LEN
+            res.push(([]).concat(arr.slice(0, i), [el], arr.slice(i)));//c22 * LEN^2
+            // 
         }
-    
-        return res;
+        console.log('res' ,res)
+        return res;// C22
     }
 
     function randomizeData() {
@@ -113,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputBoxesCount.value = getRandomInt(2, 10);
         drawSubInputs();
         for (let i = 0; i < inputBoxesCount.value; i++) {
-            document.getElementById(i + '-box-count').value = getRandomInt(10, inputContSize.value);
+            document.getElementById(i + '-box-count').value = getRandomInt(1, inputContSize.value);
         }
     }
 
