@@ -4,6 +4,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+input {
+    text-align: center;
+}
+
 .entry-data-containers {
     width: 80%;
     margin: 0 auto;

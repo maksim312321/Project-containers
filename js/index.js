@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let containers = new Array();
         for (let i = 0; i < boxes.length; i++) {
             for (let j = 0; j < containers.length; j++) {
-                if (containers[j].freePlace - boxes[i].size > 0) {
+                if (containers[j].freePlace - boxes[i].size >= 0) {
                     containers[j].freePlace -= boxes[i].size;
                     containers[j].idBoxes.push(boxes[i].id); 
                     boxes[i].isPutted = true;
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function randomizeData() {
         inputContSize.value = getRandomInt(50, 301);
-        inputBoxesCount.value = getRandomInt(2, 9);
+        inputBoxesCount.value = getRandomInt(2, 10);
         drawSubInputs();
         for (let i = 0; i < inputBoxesCount.value; i++) {
             document.getElementById(i + '-box-count').value = getRandomInt(10, inputContSize.value);
